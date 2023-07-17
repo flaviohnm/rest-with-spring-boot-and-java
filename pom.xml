@@ -17,6 +17,7 @@
 		<!-- depedencias versions -->
 		<java.version>20</java.version>
 		<mysql.version>8.0.33</mysql.version>
+		<dozermapper.version>6.5.2</dozermapper.version>
 	</properties>
 	<dependencies>
 		<!-- depedencias spring -->
@@ -45,8 +46,17 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-
-
+		<!-- dozer mapper -->
+		<dependency>
+			<groupId>com.github.dozermapper</groupId>
+			<artifactId>dozer-core</artifactId>
+			<version>${dozermapper.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>2.3.2</version>
+		</dependency>
 		<!-- dev toos -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
