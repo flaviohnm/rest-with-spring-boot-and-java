@@ -22,11 +22,11 @@ public class PersonController {
         return service.create(person);
     }
 
-    @PutMapping(value = "/",
+    @PutMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonVO update(@RequestBody PersonVO person) {
-        return service.create(person);
+        return service.update(person);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
