@@ -1,7 +1,7 @@
 package br.com.monteiro.controller;
 
 import br.com.monteiro.data.vo.v1.PersonVO;
-import br.com.monteiro.service.PersonService;
+import br.com.monteiro.service.PersonServices;
 import br.com.monteiro.util.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/person/v1")
 public class PersonController {
     @Autowired
-    private PersonService service;
+    private PersonServices service;
 
     @PostMapping(value = "/",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},

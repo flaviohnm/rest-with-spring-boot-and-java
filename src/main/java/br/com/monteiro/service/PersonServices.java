@@ -16,8 +16,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
-public class PersonService {
-    private Logger logger = Logger.getLogger(PersonService.class.getName());
+public class PersonServices {
+    private Logger logger = Logger.getLogger(PersonServices.class.getName());
     @Autowired
     PersonRepository repository;
 
@@ -27,7 +27,6 @@ public class PersonService {
 
         var persons = DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
         persons
-                .stream()
                 .forEach(p -> p.add(linkTo(methodOn(PersonController.class)
                         .findById(p.getKey()))
                         .withSelfRel()));
