@@ -2,6 +2,7 @@ package br.com.monteiro.service;
 
 import br.com.monteiro.controller.PersonController;
 import br.com.monteiro.data.vo.v1.PersonVO;
+import br.com.monteiro.exception.RequiredObjectIsNullException;
 import br.com.monteiro.exception.ResourceNotFoundException;
 import br.com.monteiro.mapper.DozerMapper;
 import br.com.monteiro.model.Person;
@@ -47,6 +48,7 @@ public class PersonServices {
     public PersonVO create(PersonVO person) {
         logger.info("Creating one person!");
 
+        if (person == null) throw new RequiredObjectIsNullException();
         var entity = DozerMapper.parseObject(person, Person.class);
         var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
         vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
@@ -56,6 +58,7 @@ public class PersonServices {
     public PersonVO update(PersonVO person) {
         logger.info("Updating one person!");
 
+        if (person == null) throw new RequiredObjectIsNullException();
         var entity = repository.findById(person.getKey())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
