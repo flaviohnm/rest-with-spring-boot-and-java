@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -58,7 +59,7 @@ class PersonServicesTest {
     }
 
 //    @Test
-//    void testCreate() {
+//    void testCreate () throws Exception {
 //        Person entity = input.mockEntity(1);
 //        entity.setId(1L);
 //
@@ -68,7 +69,7 @@ class PersonServicesTest {
 //        PersonVO vo = input.mockVO(1);
 //        vo.setKey(1L);
 //
-//        when(repository.save(entity)).thenReturn(persisted);
+//        lenient().when(repository.save(entity)).thenReturn(persisted);
 //
 //        var result = service.create(vo);
 //
@@ -77,9 +78,9 @@ class PersonServicesTest {
 //        assertNotNull(result.getLinks());
 //
 //        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-//        assertEquals("Addres Test1", result.getAddress());
-//        assertEquals("First Name Test1", result.getFirstName());
-//        assertEquals("Last Name Test1", result.getLastName());
+//        assertEquals("Address Test1", result.getAddress());
+//        assertEquals("Flavio1", result.getFirstName());
+//        assertEquals("Monteiro1", result.getLastName());
 //        assertEquals("Female", result.getGender());
 //    }
 
