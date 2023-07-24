@@ -22,8 +22,10 @@
         <springdoc.version>2.1.0</springdoc.version>
         <dozermapper.version>6.5.2</dozermapper.version>
         <modelmapper.version>3.0.0</modelmapper.version>
+        <testcontainers.version>1.18.3</testcontainers.version>
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
+        <rest-assured.version>5.3.1</rest-assured.version>
 
     </properties>
     <dependencies>
@@ -94,6 +96,18 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
