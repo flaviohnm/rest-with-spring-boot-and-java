@@ -3,25 +3,28 @@ package br.com.monteiro.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
 
 @Entity
-@Table(name = "person")
-public class Person implements Serializable {
+@Table(name = "books")
+public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "first_name", nullable = false, length = 80)
-    private String firstName;
-    @Column(name = "last_name", nullable = false, length = 80)
-    private String lastName;
-    @Column(nullable = false, length = 100)
-    private String address;
-    @Column(nullable = false, length = 6)
-    private String gender;
+    @Column(nullable = false, length = 180)
+    private String auhtor;
+    @Column(name = "launch_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date launchDate;
+    @Column(nullable = false)
+    private Double price;
+    @Column(nullable = false, length = 250)
+    private String title;
 
-    public Person() {
+    public Book() {
     }
 
     public Long getId() {
@@ -32,35 +35,48 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getAuhtor() {
+        return auhtor;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setAuhtor(String auhtor) {
+        this.auhtor = auhtor;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Date getLaunchDate() {
+        return launchDate;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLaunchDate(Date launchDate) {
+        this.launchDate = launchDate;
     }
 
-    public String getAddress() {
-        return address;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public String getGender() {
-        return gender;
+    public String getTitle() {
+        return title;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id) && Objects.equals(auhtor, book.auhtor) && Objects.equals(launchDate, book.launchDate) && Objects.equals(price, book.price) && Objects.equals(title, book.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, auhtor, launchDate, price, title);
     }
 }
