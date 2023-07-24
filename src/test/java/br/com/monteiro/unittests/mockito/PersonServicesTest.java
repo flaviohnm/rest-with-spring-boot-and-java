@@ -58,31 +58,31 @@ class PersonServicesTest {
         assertEquals("Female", result.getGender());
     }
 
-//    @Test
-//    void testCreate () throws Exception {
-//        Person entity = input.mockEntity(1);
-//        entity.setId(1L);
-//
-//        Person persisted = entity;
-//        persisted.setId(1L);
-//
-//        PersonVO vo = input.mockVO(1);
-//        vo.setKey(1L);
-//
-//        lenient().when(repository.save(entity)).thenReturn(persisted);
-//
-//        var result = service.create(vo);
-//
-//        assertNotNull(result);
-//        assertNotNull(result.getKey());
-//        assertNotNull(result.getLinks());
-//
-//        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-//        assertEquals("Address Test1", result.getAddress());
-//        assertEquals("Flavio1", result.getFirstName());
-//        assertEquals("Monteiro1", result.getLastName());
-//        assertEquals("Female", result.getGender());
-//    }
+    @Test
+    void testCreate () throws Exception {
+        Person entity = input.mockEntity(1);
+        entity.setId(1L);
+
+        Person persisted = entity;
+        persisted.setId(1L);
+
+        PersonVO vo = input.mockVO(1);
+        vo.setKey(1L);
+
+        lenient().when(repository.save(entity)).thenReturn(persisted);
+
+        var result = service.create(vo);
+
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+
+        assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+        assertEquals("Address Test1", result.getAddress());
+        assertEquals("First Name Test1", result.getFirstName());
+        assertEquals("Last Name Test1", result.getLastName());
+        assertEquals("Female", result.getGender());
+    }
 
     @Test
     void testCreateWithNullPerson() {
