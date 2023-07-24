@@ -1,7 +1,6 @@
 package br.com.monteiro.service;
 
 import br.com.monteiro.controller.BookController;
-import br.com.monteiro.controller.PersonController;
 import br.com.monteiro.data.vo.v1.BookVO;
 import br.com.monteiro.exception.RequiredObjectIsNullException;
 import br.com.monteiro.exception.ResourceNotFoundException;
@@ -28,7 +27,7 @@ public class BookServices {
         logger.info("Finding all books!");
 
         var books = DozerMapper.parseListObjects(repository.findAll(), BookVO.class);
-        books.forEach(b -> b.add(linkTo(methodOn(PersonController.class)
+        books.forEach(b -> b.add(linkTo(methodOn(BookController.class)
                 .findById(b.getKey()))
                 .withSelfRel()));
         return books;
