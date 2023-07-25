@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenAPiConfig {
     @Bean
-    public OpenAPI customOpenApi() {
+    OpenAPI customOpenApi() {
         return new OpenAPI()
                 .info(new Info()
-                .title("RESTful API With Java 18 and Spring Boot 3")
+                .title("RESTful API With Java 19 and Spring Boot 3.1.2")
                         .version("v1")
                         .description("")
                         .termsOfService("")
