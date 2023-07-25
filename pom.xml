@@ -98,6 +98,7 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- containers section -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
