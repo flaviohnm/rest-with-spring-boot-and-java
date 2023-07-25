@@ -1,9 +1,8 @@
+server:
+  port: 8888
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db:3306/${MYSQL_DATABASE}?useTimezone=true&serverTimezone=UTC
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none
