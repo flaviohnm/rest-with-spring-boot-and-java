@@ -22,7 +22,7 @@ public class PersonController {
     @Autowired
     private PersonServices service;
 
-    @CrossOrigin(origins={"http://localhost:8080","http://erudio.com.br"})
+    @CrossOrigin(origins={"http://localhost:8080","http://monteiro.com.br"})
     @PostMapping(value = "/",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
