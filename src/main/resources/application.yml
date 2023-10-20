@@ -1,11 +1,16 @@
 cors:
   originPattenrs: http://localhost:3000,http://localhost:8080,http://monteiro.com.br
+  #Para incluir configuração de cors na aplicação
+server:
+  port: 9595
+  #Para alterar a porta padrão da aplicação
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db:3306/${MYSQL_DATABASE}?useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/${MYSQL_DATABASE}?useTimezone=true&serverTimezone=UTC
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
+    #Dados da conexão com o banco de dados
   jpa:
     hibernate:
       ddl-auto: none
