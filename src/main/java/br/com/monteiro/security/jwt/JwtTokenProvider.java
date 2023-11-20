@@ -1,4 +1,4 @@
-package br.com.monteiro.securityjwt;
+package br.com.monteiro.security.jwt;
 
 import br.com.monteiro.data.vo.v1.security.TokenVO;
 import br.com.monteiro.exception.InvalidJwtAuthenticationException;
@@ -49,6 +49,17 @@ public class JwtTokenProvider {
         return new TokenVO(username, true, now, validity, accessToken, refreshToken);
     }
 
+    public TokenVO refreshToken(String refreshToken) {
+        if (refreshToken.contains("Bearer ")) refreshToken =
+                refreshToken.substring("Bearer ".length());
+
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(refreshToken);
+        String username = decodedJWT.getSubject();
+        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+        return createAccessToken(username, roles);
+    }
+
     private String getAccesToken(String username, List<String> roles, Date now, Date validity) {
         String issuerUrl = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
@@ -79,7 +90,7 @@ public class JwtTokenProvider {
                 .strip();
     }
 
-    public Authentication getAuthentication(String token){
+    public Authentication getAuthentication(String token) {
         DecodedJWT decodedJWT = decodedToken(token);
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(decodedJWT.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -93,22 +104,22 @@ public class JwtTokenProvider {
         return decodedJWT;
     }
 
-    public String resolveToken(HttpServletRequest req){
+    public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
-        if(bearerToken != null && bearerToken.startsWith("Bearer ")){
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring("Bearer ".length());
         }
         return null;
     }
 
-    public boolean validateToken (String token){
+    public boolean validateToken(String token) {
         DecodedJWT decodedJWT = decodedToken(token);
         try {
-            if(decodedJWT.getExpiresAt().before(new Date())){
+            if (decodedJWT.getExpiresAt().before(new Date())) {
                 return false;
             }
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new InvalidJwtAuthenticationException("Expired or invalid JWT Token!");
         }
     }
