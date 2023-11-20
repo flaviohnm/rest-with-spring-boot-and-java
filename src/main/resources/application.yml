@@ -1,16 +1,23 @@
+### CORS DEFINITION ###
 cors:
   originPattenrs: http://localhost:3000,http://localhost:8080,http://monteiro.com.br
-  #Para incluir configuração de cors na aplicação
+### SECURITY CONFIGURATION WITH JWT ###
+security:
+  jwt:
+    token:
+      secret-key: 53cr37
+      expire-lenght: 3600000
+### SERVER PORT DEFINITION ###
 server:
   port: 9595
   #Para alterar a porta padrão da aplicação
 spring:
+### DATABASE DEFINITION ###
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/${MYSQL_DATABASE}?useTimezone=true&serverTimezone=UTC
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
-    #Dados da conexão com o banco de dados
   jpa:
     hibernate:
       ddl-auto: none
@@ -22,6 +29,9 @@ spring:
     enable: true
     locations: classpath:/db/migration
 spring-doc:
-  pathsToMatch: /api/**/v1/**
+### SWAGGER-IU DEFINITION ###
+  pathsToMatch:
+    - /auth/**
+    - /api/**/v1/**
   swagger-iu:
     use-root-path: true
