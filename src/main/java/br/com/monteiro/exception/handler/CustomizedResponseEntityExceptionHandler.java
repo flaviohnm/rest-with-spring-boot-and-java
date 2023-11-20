@@ -1,6 +1,7 @@
 package br.com.monteiro.exception.handler;
 
 import br.com.monteiro.exception.ExceptionResponse;
+import br.com.monteiro.exception.InvalidJwtAuthenticationException;
 import br.com.monteiro.exception.RequiredObjectIsNullException;
 import br.com.monteiro.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 ex.getMessage(),
                 request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationException(
+            Exception ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse (
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
 
     }
 
