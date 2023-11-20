@@ -30,6 +30,8 @@ spring:
     locations: classpath:/db/migration
 spring-doc:
 ### SWAGGER-IU DEFINITION ###
-  pathsToMatch: /api/**/v1/**
+  pathsToMatch:
+    - /auth/**
+    - /api/**/v1/**
   swagger-iu:
     use-root-path: true
