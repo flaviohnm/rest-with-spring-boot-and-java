@@ -1,5 +1,6 @@
 package br.com.monteiro.integrationtests.controller.withyml;
 
+import br.com.monteiro.integrationtests.controller.withyml.mapper.YMLMapper;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
@@ -20,16 +21,17 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingExcep
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AuthControllerYmlTest extends AbstractIntegrationTest {
 
-    private static br.com.erudio.integrationtests.controller.withyaml.mapper.YMLMapper objectMapper;
+    private static YMLMapper objectMapper;
     private static TokenVO tokenVO;
 
     @BeforeAll
     public static void setup() {
-        objectMapper = new br.com.erudio.integrationtests.controller.withyaml.mapper.YMLMapper();
+        objectMapper = new YMLMapper();
     }
 
     @Test
@@ -82,7 +84,7 @@ public class AuthControllerYmlTest extends AbstractIntegrationTest {
                 .port(TestConfigs.SERVER_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
                 .pathParam("username", tokenVO.getUsername())
-                .header(TestConfigs.HEADAER_PARAM_AUTHORIZATION, "Bearer " + tokenVO.getRefreshToken())
+                .header(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenVO.getRefreshToken())
                 .when()
                 .put("{username}")
                 .then()

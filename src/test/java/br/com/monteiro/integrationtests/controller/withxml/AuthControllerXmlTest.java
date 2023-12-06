@@ -53,7 +53,7 @@ public class AuthControllerXmlTest extends AbstractIntegrationTest {
                 .port(TestConfigs.SERVER_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .pathParam("username", tokenVO.getUsername())
-                .header(TestConfigs.HEADAER_PARAM_AUTHORIZATION, "Bearer " + tokenVO.getRefreshToken())
+                .header(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenVO.getRefreshToken())
                 .when()
                 .put("{username}")
                 .then()
