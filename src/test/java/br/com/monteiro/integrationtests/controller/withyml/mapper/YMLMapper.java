@@ -1,4 +1,4 @@
-package br.com.erudio.integrationtests.controller.withyaml.mapper;
+package br.com.monteiro.integrationtests.controller.withyml.mapper;
 
 import java.util.logging.Logger;
 

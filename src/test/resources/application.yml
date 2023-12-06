@@ -1,3 +1,4 @@
+### CORS DEFINITION ###
 cors:
   originPattenrs: http://localhost:3000,http://localhost:8080,http://monteiro.com.br
 server:
