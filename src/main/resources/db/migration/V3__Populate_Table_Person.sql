@@ -4,5 +4,5 @@ INSERT INTO `person` (`id`, `address`, `first_name`, `gender`, `last_name`) VALU
 	(4, 'Porbandar - India', 'Indira', 'Female', 'Gandhi'),
 	(5, 'Porbandar - India', 'Mahatma', 'Male', 'Gandhi'),
 	(7, 'Kentucky - US', 'Muhammad', 'Male', 'Ali'),
-	(9, 'Brasília - DF - Brasil', 'Nelson', 'Male', 'Piquet'),
+	(9, 'Brasília - DF, Brasil', 'Nelson', 'Male', 'Piquet'),
 	(10, 'Smiljan - Croácia', 'Nikola', 'Male', 'Tesla');
