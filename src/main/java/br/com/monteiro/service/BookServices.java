@@ -61,7 +61,7 @@ public class BookServices {
         var entity = repository.findById(book.getKey())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-        entity.setAuhtor(book.getAuhtor());
+        entity.setAuthor(book.getAuthor());
         entity.setLaunchDate(book.getLaunchDate());
         entity.setPrice(book.getPrice());
         entity.setTitle(book.getTitle());

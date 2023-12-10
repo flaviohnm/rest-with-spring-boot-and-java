@@ -37,7 +37,7 @@ public class MockBook {
     public Book mockEntity(Integer number) {
         Book book = new Book();
         book.setId(number.longValue());
-        book.setAuhtor("Some Author" + number);
+        book.setAuthor("Some Author" + number);
         book.setLaunchDate(new Date());
         book.setPrice(25D);
         book.setTitle("Some Title" + number);
@@ -47,7 +47,7 @@ public class MockBook {
     public BookVO mockVO(Integer number) {
         BookVO book = new BookVO();
         book.setKey(number.longValue());
-        book.setAuhtor("Some Author" + number);
+        book.setAuthor("Some Author" + number);
         book.setLaunchDate(new Date());
         book.setPrice(25D);
         book.setTitle("Some Title" + number);

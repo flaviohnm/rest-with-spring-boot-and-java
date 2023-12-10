@@ -59,6 +59,7 @@ public class BookController {
         return service.update(book);
     }
 
+    @CrossOrigin(origins="http://localhost:8080")
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Finds a Book", description = "Finds a Book",
             tags = {"Books"},
