@@ -4,7 +4,7 @@ import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.PersonVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
-import br.com.monteiro.unittests.configs.TestConfigs;
+import br.com.monteiro.configs.TestConfigs;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -117,7 +117,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .body(person)
                 .when()
-                .post()
+                .put("{id}", person.getId())
                 .then()
                 .statusCode(200)
                 .extract()

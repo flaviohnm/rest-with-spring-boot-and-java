@@ -15,7 +15,7 @@ public class Book implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 180)
-    private String auhtor;
+    private String author;
     @Column(name = "launch_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date launchDate;
@@ -35,12 +35,12 @@ public class Book implements Serializable {
         this.id = id;
     }
 
-    public String getAuhtor() {
-        return auhtor;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuhtor(String auhtor) {
-        this.auhtor = auhtor;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Date getLaunchDate() {
@@ -72,11 +72,11 @@ public class Book implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(auhtor, book.auhtor) && Objects.equals(launchDate, book.launchDate) && Objects.equals(price, book.price) && Objects.equals(title, book.title);
+        return Objects.equals(id, book.id) && Objects.equals(author, book.author) && Objects.equals(launchDate, book.launchDate) && Objects.equals(price, book.price) && Objects.equals(title, book.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, auhtor, launchDate, price, title);
+        return Objects.hash(id, author, launchDate, price, title);
     }
 }
