@@ -1,38 +1,31 @@
-package br.com.monteiro.data.vo.v1;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.github.dozermapper.core.Mapping;
-import org.springframework.hateoas.RepresentationModel;
+package br.com.monteiro.integrationtests.vo;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@JsonPropertyOrder({"id", "author", "launchDate", "price", "title"})
-public class BookVO extends RepresentationModel<BookVO> implements Serializable {
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "BookVO")
+public class BookVO implements Serializable{
+
     private static final long serialVersionUID = 1L;
-    @JsonProperty("id")
-    @Mapping("id")
-    private Long key;
 
+    private Long id;
     private String author;
-
     private Date launchDate;
-
     private Double price;
-
     private String title;
 
     public BookVO() {
     }
 
-    public Long getKey() {
-        return key;
+    public Long getId() {
+        return id;
     }
 
-    public void setKey(Long key) {
-        this.key = key;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAuthor() {
@@ -67,16 +60,24 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
         this.title = title;
     }
 
+    public BookVO(Long id, String author, Date launchDate, Double price, String title) {
+        this.id = id;
+        this.author = author;
+        this.launchDate = launchDate;
+        this.price = price;
+        this.title = title;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BookVO book = (BookVO) o;
-        return Objects.equals(key, book.key) && Objects.equals(author, book.author) && Objects.equals(launchDate, book.launchDate) && Objects.equals(price, book.price) && Objects.equals(title, book.title);
+        BookVO bookVO = (BookVO) o;
+        return Objects.equals(id, bookVO.id) && Objects.equals(author, bookVO.author) && Objects.equals(launchDate, bookVO.launchDate) && Objects.equals(price, bookVO.price) && Objects.equals(title, bookVO.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, author, launchDate, price, title);
+        return Objects.hash(id, author, launchDate, price, title);
     }
 }

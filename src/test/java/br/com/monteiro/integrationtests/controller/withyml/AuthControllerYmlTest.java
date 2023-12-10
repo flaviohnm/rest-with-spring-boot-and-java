@@ -4,7 +4,7 @@ import br.com.monteiro.integrationtests.controller.withyml.mapper.YMLMapper;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
-import br.com.monteiro.unittests.configs.TestConfigs;
+import br.com.monteiro.configs.TestConfigs;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;

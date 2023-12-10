@@ -1,7 +1,7 @@
 package br.com.monteiro.integrationtests.swagger;
 
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
-import br.com.monteiro.unittests.configs.TestConfigs;
+import br.com.monteiro.configs.TestConfigs;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

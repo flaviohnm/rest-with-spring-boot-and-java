@@ -1,4 +1,4 @@
-package br.com.monteiro.unittests.configs;
+package br.com.monteiro.configs;
 
 public class TestConfigs {
 
