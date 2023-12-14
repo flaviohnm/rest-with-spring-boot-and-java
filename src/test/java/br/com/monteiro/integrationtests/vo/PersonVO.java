@@ -1,11 +1,13 @@
 package br.com.monteiro.integrationtests.vo;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @XmlRootElement(name = "PersonVO")
+@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender", "enabled"})
 public class PersonVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
