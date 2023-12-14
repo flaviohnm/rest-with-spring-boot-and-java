@@ -129,7 +129,6 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 
     }
 
-
     @Test
     @Order(3)
     public void testFindById() throws IOException {
@@ -166,7 +165,6 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
         assertEquals("Male", persistedPerson.getGender());
     }
 
-
     @Test
     @Order(4)
     public void testFindByIdWithWrongOrigin() throws IOException {
@@ -189,12 +187,13 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
         assertEquals("Invalid CORS request", content);
     }
 
-
     private void mockPerson() {
         person.setFirstName("Richard");
         person.setLastName("Stallman");
         person.setAddress("New York City, New York, US");
         person.setGender("Male");
+
+        person.setEnabled(true);
     }
 
 }

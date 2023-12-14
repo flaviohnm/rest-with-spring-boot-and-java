@@ -25,8 +25,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -109,6 +108,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertNotNull(persistedPerson.getLastName());
         assertNotNull(persistedPerson.getAddress());
         assertNotNull(persistedPerson.getGender());
+        assertTrue(persistedPerson.getEnabled());
 
         assertTrue(persistedPerson.getId() > 0);
 
@@ -149,6 +149,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertNotNull(persistedPerson.getLastName());
         assertNotNull(persistedPerson.getAddress());
         assertNotNull(persistedPerson.getGender());
+        assertTrue(persistedPerson.getEnabled());
 
         assertEquals(person.getId(), persistedPerson.getId());
 
@@ -160,6 +161,48 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
+    public void testDisableById() throws IOException {
+        mockPerson();
+
+        var persistedPerson = given()
+                .spec(specification)
+                .config(RestAssuredConfig.config().encoderConfig(
+                        EncoderConfig.encoderConfig()
+                                .encodeContentTypeAs(
+                                        TestConfigs.CONTENT_TYPE_YML,
+                                        ContentType.TEXT)))
+                .contentType(TestConfigs.CONTENT_TYPE_YML)
+                .accept(TestConfigs.CONTENT_TYPE_YML)
+                .pathParam("id", person.getId())
+                .when()
+                .patch("{id}")
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .as(PersonVO.class, objectMapper);
+
+        person = persistedPerson;
+
+        assertNotNull(persistedPerson);
+        assertNotNull(persistedPerson.getId());
+        assertNotNull(persistedPerson.getFirstName());
+        assertNotNull(persistedPerson.getLastName());
+        assertNotNull(persistedPerson.getAddress());
+        assertNotNull(persistedPerson.getGender());
+        assertFalse(persistedPerson.getEnabled());
+
+
+        assertEquals(person.getId(), persistedPerson.getId());
+
+        assertEquals("Nelson", persistedPerson.getFirstName());
+        assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+        assertEquals("Brasília - DF, Brasil", persistedPerson.getAddress());
+        assertEquals("Male", persistedPerson.getGender());
+    }
+
+    @Test
+    @Order(4)
     public void testFindById() throws IOException {
         mockPerson();
 
@@ -189,6 +232,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertNotNull(persistedPerson.getLastName());
         assertNotNull(persistedPerson.getAddress());
         assertNotNull(persistedPerson.getGender());
+        assertFalse(persistedPerson.getEnabled());
 
         assertEquals(person.getId(), persistedPerson.getId());
 
@@ -198,9 +242,8 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertEquals("Male", persistedPerson.getGender());
     }
 
-
     @Test
-    @Order(4)
+    @Order(5)
     public void testDelete() throws IOException {
 
         var content = given()
@@ -219,9 +262,8 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
                 .statusCode(204);
     }
 
-
     @Test
-    @Order(5)
+    @Order(6)
     public void testFindAll() throws IOException {
 
         var content = given()
@@ -250,6 +292,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertNotNull(foundPersonOne.getLastName());
         assertNotNull(foundPersonOne.getAddress());
         assertNotNull(foundPersonOne.getGender());
+        assertFalse(foundPersonOne.getEnabled());
 
         assertEquals(1, foundPersonOne.getId());
 
@@ -257,8 +300,16 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertEquals("Senna", foundPersonOne.getLastName());
         assertEquals("São Paulo", foundPersonOne.getAddress());
         assertEquals("Male", foundPersonOne.getGender());
+        assertEquals("Male", foundPersonOne.getGender());
 
         PersonVO foundPersonSix = people.get(5);
+
+        assertNotNull(foundPersonSix.getId());
+        assertNotNull(foundPersonSix.getFirstName());
+        assertNotNull(foundPersonSix.getLastName());
+        assertNotNull(foundPersonSix.getAddress());
+        assertNotNull(foundPersonSix.getGender());
+        assertFalse(foundPersonSix.getEnabled());
 
         assertEquals(9, foundPersonSix.getId());
 
@@ -268,9 +319,8 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertEquals("Male", foundPersonSix.getGender());
     }
 
-
     @Test
-    @Order(6)
+    @Order(7)
     public void testFindAllWithoutToken() throws IOException {
 
         RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -301,6 +351,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         person.setLastName("Piquet");
         person.setAddress("Brasília - DF, Brasil");
         person.setGender("Male");
+        person.setEnabled(true);
     }
 
 }
