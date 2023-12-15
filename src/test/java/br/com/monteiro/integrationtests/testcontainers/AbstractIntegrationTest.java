@@ -16,7 +16,7 @@ public class AbstractIntegrationTest {
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-        static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:latest");
+        static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.2");
 
         private static void startContainers() {
             Startables.deepStart(Stream.of(mysql)).join();
