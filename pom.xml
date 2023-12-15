@@ -20,7 +20,7 @@
         <mysql.version>8.2.0</mysql.version>
         <flyway.version>10.2.0</flyway.version>
         <mockito.version>5.4.0</mockito.version>
-        <springdoc.version>2.2.0</springdoc.version>
+        <springdoc.version>2.3.0</springdoc.version>
         <dozermapper.version>6.5.2</dozermapper.version>
         <modelmapper.version>3.0.0</modelmapper.version>
         <testcontainers.version>1.18.3</testcontainers.version>
@@ -113,6 +113,7 @@
             <artifactId>jaxb-api</artifactId>
             <version>${jaxb-api.version}</version>
         </dependency>
+
         <!-- test section -->
         <dependency>
             <groupId>org.mockito</groupId>
