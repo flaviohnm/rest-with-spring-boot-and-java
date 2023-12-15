@@ -19,7 +19,6 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     private String lastName;
     private String address;
     private String gender;
-
     private Boolean enabled;
 
     public PersonVO() {
