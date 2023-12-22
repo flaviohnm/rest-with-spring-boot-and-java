@@ -9,9 +9,10 @@ import br.com.monteiro.model.Person;
 import br.com.monteiro.repositories.PersonRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,10 @@ public class PersonServices {
     @Autowired
     PersonRepository repository;
 
-    public Page<PersonVO> findAll(Pageable pageable) {
+    @Autowired
+    PagedResourcesAssembler<PersonVO> assembler;
+
+    public PagedModel<EntityModel<PersonVO>> findAll(Pageable pageable) {
 
         logger.info("Finding all people!");
 
@@ -38,7 +42,13 @@ public class PersonServices {
                         linkTo(methodOn(PersonController.class)
                                 .findById(p.getKey()))
                                 .withSelfRel()));
-        return personVosPage;
+        Link link = linkTo(
+                methodOn(PersonController.class)
+                        .findAll(pageable.getPageNumber(),
+                                pageable.getPageSize(),
+                                "asc")).withSelfRel();
+
+        return assembler.toModel(personVosPage, link);
     }
 
     public PersonVO findById(Long id) {
