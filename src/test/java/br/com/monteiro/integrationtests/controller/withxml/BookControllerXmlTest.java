@@ -5,6 +5,8 @@ import br.com.monteiro.data.vo.v1.security.TokenVO;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.BookVO;
+import br.com.monteiro.integrationtests.vo.pagedmodels.PagedModelBook;
+import br.com.monteiro.integrationtests.vo.pagedmodels.PagedModelPerson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -183,6 +185,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
+                .queryParams("page", 0 , "size", 5, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -191,7 +194,9 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
                 .body()
                 .asString();
 
-        List<BookVO> books = objectMapper.readValue(content, new TypeReference<List<BookVO>>() {});
+        PagedModelBook wrapper = objectMapper.readValue(content, PagedModelBook.class);
+
+        var books = wrapper.getContent();
 
         BookVO foundBookOne = books.get(0);
 
@@ -200,9 +205,9 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookOne.getAuthor());
         assertNotNull(foundBookOne.getPrice());
         assertTrue(foundBookOne.getId() > 0);
-        assertEquals("Working effectively with legacy code", foundBookOne.getTitle());
-        assertEquals("Michael C. Feathers", foundBookOne.getAuthor());
-        assertEquals(49.00, foundBookOne.getPrice());
+        assertEquals("Implantando a governança de TI", foundBookOne.getTitle());
+        assertEquals("Aguinaldo Aragon Fernandes e Vladimir Ferraz de Abreu", foundBookOne.getAuthor());
+        assertEquals(54.00, foundBookOne.getPrice());
 
         BookVO foundBookFive = books.get(4);
 
@@ -211,9 +216,10 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookFive.getAuthor());
         assertNotNull(foundBookFive.getPrice());
         assertTrue(foundBookFive.getId() > 0);
-        assertEquals("Code complete", foundBookFive.getTitle());
-        assertEquals("Steve McConnell", foundBookFive.getAuthor());
-        assertEquals(58.0, foundBookFive.getPrice());
+        assertEquals("Head First Design Patterns", foundBookFive.getTitle());
+        assertEquals("Eric Freeman, Elisabeth Freeman, Kathy Sierra, Bert Bates", foundBookFive.getAuthor());
+        assertEquals(110.0, foundBookFive.getPrice());
+
     }
 
 
