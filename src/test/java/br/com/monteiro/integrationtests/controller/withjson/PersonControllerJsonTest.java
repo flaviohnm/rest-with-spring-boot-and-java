@@ -6,7 +6,6 @@ import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.PersonVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
 import br.com.monteiro.integrationtests.vo.wrappers.WrapperPersonVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -15,7 +14,6 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.DeserializationFeature;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -43,7 +41,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(0)
-    public void authorization() throws JsonMappingException, JsonProcessingException {
+    public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var accessToken = given()
@@ -217,7 +215,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(5)
-    public void testDelete() throws IOException {
+    public void testDelete() {
 
         var content = given()
                 .spec(specification)
@@ -236,7 +234,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         var content = given()
                 .spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                .queryParam("page",3,"size",10, "direction", "asc")
+                .queryParam("page", 3, "size", 10, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -249,7 +247,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
         var people = wrapper.getEmbedded().getPersons();
 
-        PersonVO foundPersonOne = people.get(0);
+        PersonVO foundPersonOne = people.getFirst();
 
         assertNotNull(foundPersonOne.getId());
         assertNotNull(foundPersonOne.getFirstName());
@@ -282,10 +280,49 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         assertEquals("Male", foundPersonSix.getGender());
     }
 
-
     @Test
     @Order(7)
-    public void testFindAllWithoutToken() throws IOException {
+    public void testFindByName() throws IOException {
+
+        var content = given()
+                .spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .pathParam("firstName", "ayr")
+                .queryParam("page", 0, "size", 6, "direction", "asc")
+                .when()
+                .get("findPersonByName/{firstName}")
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .asString();
+
+        WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
+
+        var people = wrapper.getEmbedded().getPersons();
+
+        PersonVO foundPersonOne = people.getFirst();
+
+        assertNotNull(foundPersonOne.getId());
+        assertNotNull(foundPersonOne.getFirstName());
+        assertNotNull(foundPersonOne.getLastName());
+        assertNotNull(foundPersonOne.getAddress());
+        assertNotNull(foundPersonOne.getGender());
+        assertTrue(foundPersonOne.getEnabled());
+
+        assertEquals(1, foundPersonOne.getId());
+
+        assertEquals("Ayrton", foundPersonOne.getFirstName());
+        assertEquals("Senna", foundPersonOne.getLastName());
+        assertEquals("São Paulo", foundPersonOne.getAddress());
+        assertEquals("Male", foundPersonOne.getGender());
+
+    }
+
+
+    @Test
+    @Order(8)
+    public void testFindAllWithoutToken() {
 
         RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
                 .setBasePath("/api/person/v1/")
@@ -293,7 +330,6 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                 .build();
-        ;
 
         var content = given()
                 .spec(specificationWithoutToken)

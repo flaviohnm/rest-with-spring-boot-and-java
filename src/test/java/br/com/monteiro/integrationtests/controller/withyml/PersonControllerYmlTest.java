@@ -7,9 +7,6 @@ import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.PersonVO;
 import br.com.monteiro.integrationtests.vo.pagedmodels.PagedModelPerson;
-import br.com.monteiro.integrationtests.vo.wrappers.WrapperPersonVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -20,8 +17,6 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
@@ -45,7 +40,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(0)
-    public void authorization() throws JsonMappingException, JsonProcessingException {
+    public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var accessToken = given()
@@ -79,7 +74,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(1)
-    public void testCreate() throws IOException {
+    public void testCreate() {
         mockPerson();
 
         var persistedPerson = given()
@@ -120,7 +115,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(2)
-    public void testUpdate() throws IOException {
+    public void testUpdate() {
         person.setLastName("Piquet Souto Maior");
 
         var persistedPerson = given()
@@ -161,7 +156,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
-    public void testDisableById() throws IOException {
+    public void testDisableById() {
         mockPerson();
 
         var persistedPerson = given()
@@ -203,7 +198,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(4)
-    public void testFindById() throws IOException {
+    public void testFindById() {
         mockPerson();
 
         var persistedPerson = given()
@@ -244,7 +239,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(5)
-    public void testDelete() throws IOException {
+    public void testDelete() {
 
         var content = given()
                 .spec(specification)
@@ -264,7 +259,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(6)
-    public void testFindAll() throws IOException {
+    public void testFindAll() {
 
         var wrapper = given()
                 .spec(specification)
@@ -275,7 +270,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
                                         ContentType.TEXT)))
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
                 .accept(TestConfigs.CONTENT_TYPE_YML)
-                .queryParam("page",3,"size",10, "direction", "asc")
+                .queryParam("page", 3, "size", 10, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -286,7 +281,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
         var people = wrapper.getContent();
 
-        PersonVO foundPersonOne = people.get(0);
+        PersonVO foundPersonOne = people.getFirst();
 
         assertNotNull(foundPersonOne.getId());
         assertNotNull(foundPersonOne.getFirstName());
@@ -321,7 +316,50 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(7)
-    public void testFindAllWithoutToken() throws IOException {
+    public void testFindByName() {
+
+        var wrapper = given()
+                .spec(specification)
+                .config(RestAssuredConfig.config().encoderConfig(
+                        EncoderConfig.encoderConfig()
+                                .encodeContentTypeAs(
+                                        TestConfigs.CONTENT_TYPE_YML,
+                                        ContentType.TEXT)))
+                .contentType(TestConfigs.CONTENT_TYPE_YML)
+                .accept(TestConfigs.CONTENT_TYPE_YML)
+                .pathParam("firstName", "ayr")
+                .queryParam("page", 0, "size", 6, "direction", "asc")
+                .when()
+                .get("findPersonByName/{firstName}")
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .as(PagedModelPerson.class, objectMapper);
+
+        var people = wrapper.getContent();
+
+        PersonVO foundPersonOne = people.getFirst();
+
+        assertNotNull(foundPersonOne.getId());
+        assertNotNull(foundPersonOne.getFirstName());
+        assertNotNull(foundPersonOne.getLastName());
+        assertNotNull(foundPersonOne.getAddress());
+        assertNotNull(foundPersonOne.getGender());
+        assertTrue(foundPersonOne.getEnabled());
+
+        assertEquals(1, foundPersonOne.getId());
+
+        assertEquals("Ayrton", foundPersonOne.getFirstName());
+        assertEquals("Senna", foundPersonOne.getLastName());
+        assertEquals("São Paulo", foundPersonOne.getAddress());
+        assertEquals("Male", foundPersonOne.getGender());
+
+    }
+
+    @Test
+    @Order(8)
+    public void testFindAllWithoutToken() {
 
         RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
                 .setBasePath("/api/person/v1/")
@@ -329,7 +367,6 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                 .build();
-        ;
 
         var content = given()
                 .spec(specificationWithoutToken)
