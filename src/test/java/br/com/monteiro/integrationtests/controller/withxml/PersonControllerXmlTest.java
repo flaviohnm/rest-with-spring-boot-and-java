@@ -365,15 +365,15 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
                 .asString();
 
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/7</href></links>"));
-        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/797</href></links>"));
-        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/686</href></links>"));
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/677</href></links>"));
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/414</href></links>"));
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/846</href></links>"));
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/409</href></links>"));
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/714</href></links>"));
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/911</href></links>"));
+        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/797</href></links>"));
         assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/199</href></links>"));
+        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/686</href></links>"));
 
         assertTrue(content.contains("<links><rel>first</rel><href>http://localhost:8888/api/person/v1/?direction=asc&amp;page=0&amp;size=10&amp;sort=firstName,asc</href></links>"));
         assertTrue(content.contains("<links><rel>prev</rel><href>http://localhost:8888/api/person/v1/?direction=asc&amp;page=2&amp;size=10&amp;sort=firstName,asc</href></links>"));
