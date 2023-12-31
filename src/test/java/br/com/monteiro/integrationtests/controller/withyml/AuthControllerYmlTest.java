@@ -1,11 +1,10 @@
 package br.com.monteiro.integrationtests.controller.withyml;
 
+import br.com.monteiro.configs.TestConfigs;
 import br.com.monteiro.integrationtests.controller.withyml.mapper.YMLMapper;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
-import br.com.monteiro.configs.TestConfigs;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -16,7 +15,6 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,7 +34,7 @@ public class AuthControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(1)
-    public void testSignin() throws JsonMappingException, JsonProcessingException {
+    public void testSignin() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         RequestSpecification specification = new RequestSpecBuilder()
@@ -70,7 +68,7 @@ public class AuthControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(2)
-    public void testRefresh() throws JsonMappingException, JsonProcessingException {
+    public void testRefresh() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var newTokenVO = given()

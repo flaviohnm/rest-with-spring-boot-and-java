@@ -1,11 +1,10 @@
 package br.com.monteiro.integrationtests.controller.cors;
 
+import br.com.monteiro.configs.TestConfigs;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.PersonVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
-import br.com.monteiro.configs.TestConfigs;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -14,7 +13,6 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.DeserializationFeature;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -43,7 +41,7 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(0)
-    public void authorization() throws JsonMappingException, JsonProcessingException {
+    public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var accessToken = given()
@@ -108,7 +106,7 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(2)
-    public void testCreateWithWrongOrigin() throws IOException {
+    public void testCreateWithWrongOrigin() {
         mockPerson();
 
         var content = given()
@@ -167,7 +165,7 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(4)
-    public void testFindByIdWithWrongOrigin() throws IOException {
+    public void testFindByIdWithWrongOrigin() {
         mockPerson();
 
         var content = given()
