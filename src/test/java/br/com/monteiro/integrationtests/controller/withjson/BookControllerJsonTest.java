@@ -1,13 +1,11 @@
 package br.com.monteiro.integrationtests.controller.withjson;
 
+import br.com.monteiro.configs.TestConfigs;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.BookVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
-import br.com.monteiro.configs.TestConfigs;
 import br.com.monteiro.integrationtests.vo.wrappers.WrapperBookVO;
-import br.com.monteiro.integrationtests.vo.wrappers.WrapperPersonVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -15,14 +13,11 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.type.TypeReference;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.DeserializationFeature;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
@@ -48,7 +43,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(0)
-    public void authorization() throws JsonMappingException, JsonProcessingException {
+    public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var accessToken = given()
@@ -111,14 +106,14 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
 
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                    .body(book)
-                    .when()
-                    .put("{id}", book.getId())
+                .body(book)
+                .when()
+                .put("{id}", book.getId())
                 .then()
-                    .statusCode(200)
-                        .extract()
-                        .body()
-                        .asString();
+                .statusCode(200)
+                .extract()
+                .body()
+                .asString();
 
         BookVO bookUpdated = objectMapper.readValue(content, BookVO.class);
 
@@ -176,7 +171,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
 
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                .queryParams("page", 0 , "size", 5, "direction", "asc")
+                .queryParams("page", 0, "size", 5, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -190,7 +185,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
 
         var books = wrapper.getEmbedded().getBooks();
 
-        BookVO foundBookOne = books.get(0);
+        BookVO foundBookOne = books.getFirst();
 
         assertNotNull(foundBookOne.getId());
         assertNotNull(foundBookOne.getTitle());
