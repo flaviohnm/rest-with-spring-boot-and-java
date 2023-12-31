@@ -1,14 +1,12 @@
 package br.com.monteiro.integrationtests.controller.withyml;
 
+import br.com.monteiro.configs.TestConfigs;
 import br.com.monteiro.integrationtests.controller.withyml.mapper.YMLMapper;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.BookVO;
 import br.com.monteiro.integrationtests.vo.TokenVO;
-import br.com.monteiro.configs.TestConfigs;
 import br.com.monteiro.integrationtests.vo.pagedmodels.PagedModelBook;
-import br.com.monteiro.integrationtests.vo.pagedmodels.PagedModelPerson;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -19,12 +17,8 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonMappingException;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
@@ -49,7 +43,7 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(0)
-    public void authorization() throws JsonMappingException, JsonProcessingException {
+    public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var accessToken = given()
@@ -62,7 +56,7 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
                 .port(TestConfigs.SERVER_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
                 .accept(TestConfigs.CONTENT_TYPE_YML)
-                .body(user,objectMapper)
+                .body(user, objectMapper)
                 .when()
                 .post()
                 .then()
@@ -84,7 +78,7 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(1)
-    public void testCreate() throws IOException {
+    public void testCreate() {
         mockBook();
 
         var persistedBook = given().spec(specification)
@@ -118,7 +112,7 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
-    public void testUpdate() throws IOException {
+    public void testUpdate() {
 
         book.setTitle("Docker Deep Dive - Updated");
 
@@ -153,7 +147,7 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(4)
-    public void testFindById() throws IOException {
+    public void testFindById() {
         mockBook();
 
         var persistedBook = given().spec(specification)
@@ -205,7 +199,7 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(6)
-    public void testFindAll() throws IOException {
+    public void testFindAll() {
 
         var wrapper = given().spec(specification)
                 .config(RestAssuredConfig.config().encoderConfig(
@@ -226,7 +220,7 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
 
         var books = wrapper.getContent();
 
-        BookVO foundBookOne = books.get(0);
+        BookVO foundBookOne = books.getFirst();
 
         assertNotNull(foundBookOne.getId());
         assertNotNull(foundBookOne.getTitle());
