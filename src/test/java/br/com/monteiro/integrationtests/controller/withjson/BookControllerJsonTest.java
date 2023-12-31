@@ -208,6 +208,40 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertEquals(110.0, foundBookFive.getPrice());
     }
 
+    @Test
+    @Order(7)
+    public void testHATEOAS() {
+
+        var content = given().spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .accept(TestConfigs.CONTENT_TYPE_JSON)
+                .queryParams("page", 0, "size", 8, "direction", "asc")
+                .when()
+                .get()
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .asString();
+
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/15\"}}}"));
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/9\"}}}"));
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/4\"}}}"));
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/8\"}}}"));
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/7\"}}}"));
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/14\"}}}"));
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/6\"}}}"));
+        assertTrue(content.contains("\"_links\":{\"self\":{\"href\":\"http://localhost:8888/api/book/v1/1\"}}}"));
+
+        assertTrue(content.contains("{\"first\":{\"href\":\"http://localhost:8888/api/book/v1/?direction=asc&page=0&size=8&sort=author,asc\"}"));
+        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost:8888/api/book/v1/?page=0&size=8&direction=asc\"}"));
+        assertTrue(content.contains("\"next\":{\"href\":\"http://localhost:8888/api/book/v1/?direction=asc&page=1&size=8&sort=author,asc\"}"));
+        assertTrue(content.contains("\"last\":{\"href\":\"http://localhost:8888/api/book/v1/?direction=asc&page=1&size=8&sort=author,asc\"}}"));
+
+        assertTrue(content.contains("\"page\":{\"size\":8,\"totalElements\":15,\"totalPages\":2,\"number\":0}}"));
+
+    }
+
     private void mockBook() {
         book.setTitle("Docker Deep Dive");
         book.setAuthor("Nigel Poulton");
