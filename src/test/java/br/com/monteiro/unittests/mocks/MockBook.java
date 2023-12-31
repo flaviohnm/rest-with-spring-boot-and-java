@@ -19,7 +19,7 @@ public class MockBook {
     }
 
     public List<Book> mockEntityList() {
-        List<Book> persons = new ArrayList<Book>();
+        List<Book> persons = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
             persons.add(mockEntity(i));
         }

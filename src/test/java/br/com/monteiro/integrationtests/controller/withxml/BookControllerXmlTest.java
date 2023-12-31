@@ -242,7 +242,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
     private void mockBook() {
         book.setTitle("Docker Deep Dive");
         book.setAuthor("Nigel Poulton");
-        book.setPrice(Double.valueOf(55.99));
+        book.setPrice(55.99);
         book.setLaunchDate(new Date());
     }
 
