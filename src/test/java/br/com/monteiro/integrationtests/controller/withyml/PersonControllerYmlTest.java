@@ -413,8 +413,10 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
         assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/409\""));
         assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/714\""));
         assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/911\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/797\""));
         assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/199\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/686\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/" +
+                "person/v1/686\""));
 
         assertTrue(content.contains("rel: \"first\"  href: \"http://localhost:8888/api/person/v1/?direction=asc&page=0&size=10&sort=firstName,asc\""));
         assertTrue(content.contains("rel: \"prev\"  href: \"http://localhost:8888/api/person/v1/?direction=asc&page=2&size=10&sort=firstName,asc\""));
