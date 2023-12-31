@@ -112,7 +112,7 @@ class PersonServicesTest {
     }
 
     @Test
-    void testTupdate() {
+    void testUpdate() {
         Person entity = input.mockEntity(1);
         entity.setId(1L);
 
