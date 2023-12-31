@@ -5,10 +5,9 @@ import br.com.monteiro.data.vo.v1.security.TokenVO;
 import br.com.monteiro.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.monteiro.integrationtests.vo.AccountCredentialsVO;
 import br.com.monteiro.integrationtests.vo.BookVO;
+import br.com.monteiro.integrationtests.vo.pagedmodels.PagedModelBook;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -20,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
@@ -46,7 +44,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(0)
-    public void authorization() throws JsonMappingException, JsonProcessingException {
+    public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var accessToken = given()
@@ -105,7 +103,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(2)
-    public void testUpdate() throws JsonMappingException, JsonProcessingException {
+    public void testUpdate() throws JsonProcessingException {
 
         book.setTitle("Docker Deep Dive - Updated");
 
@@ -135,7 +133,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
-    public void testFindById() throws JsonMappingException, JsonProcessingException {
+    public void testFindById() throws JsonProcessingException {
         mockBook();
 
         var content = given().spec(specification)
@@ -164,7 +162,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(4)
-    public void testDelete() throws JsonMappingException, JsonProcessingException {
+    public void testDelete() {
 
         given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
@@ -178,11 +176,12 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(5)
-    public void testFindAll() throws JsonMappingException, JsonProcessingException {
+    public void testFindAll() throws JsonProcessingException {
 
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
+                .queryParams("page", 0, "size", 5, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -191,18 +190,20 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
                 .body()
                 .asString();
 
-        List<BookVO> books = objectMapper.readValue(content, new TypeReference<List<BookVO>>() {});
+        PagedModelBook wrapper = objectMapper.readValue(content, PagedModelBook.class);
 
-        BookVO foundBookOne = books.get(0);
+        var books = wrapper.getContent();
+
+        BookVO foundBookOne = books.getFirst();
 
         assertNotNull(foundBookOne.getId());
         assertNotNull(foundBookOne.getTitle());
         assertNotNull(foundBookOne.getAuthor());
         assertNotNull(foundBookOne.getPrice());
         assertTrue(foundBookOne.getId() > 0);
-        assertEquals("Working effectively with legacy code", foundBookOne.getTitle());
-        assertEquals("Michael C. Feathers", foundBookOne.getAuthor());
-        assertEquals(49.00, foundBookOne.getPrice());
+        assertEquals("Implantando a governança de TI", foundBookOne.getTitle());
+        assertEquals("Aguinaldo Aragon Fernandes e Vladimir Ferraz de Abreu", foundBookOne.getAuthor());
+        assertEquals(54.00, foundBookOne.getPrice());
 
         BookVO foundBookFive = books.get(4);
 
@@ -211,15 +212,16 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookFive.getAuthor());
         assertNotNull(foundBookFive.getPrice());
         assertTrue(foundBookFive.getId() > 0);
-        assertEquals("Code complete", foundBookFive.getTitle());
-        assertEquals("Steve McConnell", foundBookFive.getAuthor());
-        assertEquals(58.0, foundBookFive.getPrice());
+        assertEquals("Head First Design Patterns", foundBookFive.getTitle());
+        assertEquals("Eric Freeman, Elisabeth Freeman, Kathy Sierra, Bert Bates", foundBookFive.getAuthor());
+        assertEquals(110.0, foundBookFive.getPrice());
+
     }
 
 
     @Test
     @Order(6)
-    public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
+    public void testFindAllWithoutToken() {
 
         RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
                 .setBasePath("/api/book/v1")
