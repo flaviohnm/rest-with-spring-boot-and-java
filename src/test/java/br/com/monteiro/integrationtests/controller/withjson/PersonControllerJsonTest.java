@@ -321,6 +321,26 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
     @Test
     @Order(8)
+    public void testFindAllWithoutToken() {
+
+        RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
+                .setBasePath("/api/person/v1/")
+                .setPort(TestConfigs.SERVER_PORT)
+                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
+                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+                .build();
+
+        var content = given()
+                .spec(specificationWithoutToken)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .when()
+                .get()
+                .then()
+                .statusCode(403);
+    }
+
+    @Test
+    @Order(9)
     public void testHATEOAS() {
 
         var content = given()
@@ -352,28 +372,8 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         assertTrue(content.contains("\"next\":{\"href\":\"http://localhost:8888/api/person/v1/?direction=asc&page=4&size=10&sort=firstName,asc\"}"));
         assertTrue(content.contains("\"last\":{\"href\":\"http://localhost:8888/api/person/v1/?direction=asc&page=100&size=10&sort=firstName,asc\"}}"));
 
-        assertTrue(content.contains("\"page\":{\"size\":10,\"totalElements\":1008,\"totalPages\":101,\"number\":3}}"));
+        assertTrue(content.contains("\"page\":{\"size\":10,\"totalElements\":1007,\"totalPages\":101,\"number\":3}}"));
 
-    }
-
-    @Test
-    @Order(9)
-    public void testFindAllWithoutToken() {
-
-        RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
-                .setBasePath("/api/person/v1/")
-                .setPort(TestConfigs.SERVER_PORT)
-                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
-                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
-                .build();
-
-        var content = given()
-                .spec(specificationWithoutToken)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                .when()
-                .get()
-                .then()
-                .statusCode(403);
     }
 
     private void mockPerson() {

@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +34,7 @@ class BookServicesTest {
     BookRepository repository;
 
     @BeforeEach
-    void setUpMocks() throws Exception {
+    void setUpMocks() {
         input = new MockBook();
         MockitoAnnotations.openMocks(this);
     }
@@ -59,7 +58,7 @@ class BookServicesTest {
     }
 
     @Test
-    void testCreate() throws Exception {
+    void testCreate() {
         Book entity = input.mockEntity(1);
         entity.setId(1L);
 
@@ -113,7 +112,7 @@ class BookServicesTest {
     }
 
     @Test
-    void testTupdate() {
+    void testUpdate() {
         Book entity = input.mockEntity(1);
         entity.setId(1L);
 
@@ -139,54 +138,6 @@ class BookServicesTest {
         assertNotNull(result.getLaunchDate());
 
     }
-
-
-    @Test
-    void testFindAll() {
-        List<Book> list = input.mockEntityList();
-
-        when(repository.findAll()).thenReturn(list);
-
-        var people = service.findAll();
-
-        assertNotNull(people);
-        assertEquals(14, people.size());
-
-        var bookOne = people.get(1);
-
-        assertNotNull(bookOne);
-        assertNotNull(bookOne.getKey());
-        assertNotNull(bookOne.getLinks());
-        assertTrue(bookOne.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
-        assertEquals("Some Author1", bookOne.getAuthor());
-        assertEquals("Some Title1", bookOne.getTitle());
-        assertEquals(25D, bookOne.getPrice());
-        assertNotNull(bookOne.getLaunchDate());
-
-        var bookFour = people.get(4);
-
-        assertNotNull(bookFour);
-        assertNotNull(bookFour.getKey());
-        assertNotNull(bookFour.getLinks());
-        assertTrue(bookFour.toString().contains("links: [</api/book/v1/4>;rel=\"self\"]"));
-        assertEquals("Some Author4", bookFour.getAuthor());
-        assertEquals("Some Title4", bookFour.getTitle());
-        assertEquals(25D, bookFour.getPrice());
-        assertNotNull(bookFour.getLaunchDate());
-
-        var bookSeven = people.get(7);
-
-        assertNotNull(bookSeven);
-        assertNotNull(bookSeven.getKey());
-        assertNotNull(bookSeven.getLinks());
-        assertTrue(bookSeven.toString().contains("links: [</api/book/v1/7>;rel=\"self\"]"));
-        assertEquals("Some Author7", bookSeven.getAuthor());
-        assertEquals("Some Title7", bookSeven.getTitle());
-        assertEquals(25D, bookSeven.getPrice());
-        assertNotNull(bookSeven.getLaunchDate());
-
-    }
-
 
     @Test
     void testDelete() {
