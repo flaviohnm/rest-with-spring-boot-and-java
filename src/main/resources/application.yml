@@ -1,6 +1,9 @@
 ### CORS DEFINITION ###
 cors:
   originPattenrs: http://localhost:3000,http://localhost:8080,http://monteiro.com.br
+### FILE REPOSITORY ###
+file:
+  upload-dir: /uploadDir
 ### SECURITY CONFIGURATION WITH JWT ###
 security:
   jwt:
@@ -25,6 +28,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: false
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
   flyway:
     enable: true
     locations: classpath:/db/migration
