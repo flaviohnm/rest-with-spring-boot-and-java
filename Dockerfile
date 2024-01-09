@@ -1,4 +1,4 @@
-FROM mysql:8.0.33
+FROM mysql:latest
 RUN chown -R mysql:root /var/lib/mysql/
 
 ARG MYSQL_DATABASE
@@ -16,3 +16,8 @@ RUN sed -i 's/MYSQL_DATABASE/'$MYSQL_DATABASE'/g' /etc/mysql/data.sql
 RUN cp /etc/mysql/data.sql /docker-entrypoint-initdb.d
 
 EXPOSE 3306
+
+FROM eclipse-temurin:21-jammy
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
