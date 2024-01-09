@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.9'
 services:
   db:
     image: 'mysql:latest'
@@ -9,12 +9,39 @@ services:
       MYSQL_USER: dbuser
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+      TZ: America/Sao_Paulo
     ports:
       -  '3306:3306'
     expose:
       - '3306'
+    networks:
+      - monteiro-network
     volumes:
       - my-db:/var/lib/mysql
       - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  rest-with-spring-boot-and-java:
+    container_name: app
+    image: flaviohnm/rest-with-spring-boot-and-java
+    restart: always
+    build: ./
+    working_dir: /
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.DATASOURCE.URL: jdbc:mysql://db:3306/dbjavacourse?useTimezone=true&serverTimezone=UTC
+      SPRING.DATASOURCE.USERNAME: dbuser
+      SPRING.DATASOURCE.PASSWORD: password
+    ports:
+      - 80:80
+    command: mvn spring-boot:run
+    depends_on:
+      - db
+    networks:
+      - monteiro-network
+
 volumes:
   my-db:
+
+networks:
+  monteiro-network:
+    driver: bridge
