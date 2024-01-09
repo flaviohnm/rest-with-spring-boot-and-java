@@ -2,7 +2,10 @@ package br.com.monteiro.service;
 
 import br.com.monteiro.config.FileStorageConfig;
 import br.com.monteiro.exception.FileStorageException;
+import br.com.monteiro.exception.MyFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +40,7 @@ public class FileStorageService {
         try {
             if (fileName.contains("..")) {
                 throw new FileStorageException(
-                        "Sorry! Filename contais invalid path sequence " + fileName);
+                        "Sorry! Filename contains invalid path sequence " + fileName);
             }
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -45,6 +48,18 @@ public class FileStorageService {
         } catch (Exception e) {
             throw new FileStorageException(
                     "Could not store file " + fileName + ". Please try again!", e);
+        }
+    }
+
+    public Resource loadFileAsResource(String fileName) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if(resource.exists()) return resource;
+            else throw new MyFileNotFoundException("File not found");
+
+        } catch (Exception e) {
+            throw new MyFileNotFoundException("File not found" + fileName, e);
         }
     }
 }
