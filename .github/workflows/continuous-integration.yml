@@ -10,9 +10,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Login to Docker Hub
-      uses: docker/login-action@v3.0.0
+      uses: docker/login-action@v2.0.0
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
@@ -23,8 +23,8 @@ jobs:
         java-version: '18'
         distribution: 'adopt'
         cache: maven
-        
-    - name: Build Application Jar
+
+    - name: Build Application JAR
       working-directory: ./rest-with-spring-boot-and-java
       run: mvn clean package
 
@@ -33,7 +33,8 @@ jobs:
       run: docker compose build
 
     - name: Push to Docker Hub Container Registry
-    - run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-java:latest ${{ secrets.DOCKER_USERNAME }}/${{ github.run_id }}
-        docker push ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-java:latest
+      run: |
+        docker tag ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-java:latest ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-java:${{ github.run_id }}
+
         docker push ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-java:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-java:latest
