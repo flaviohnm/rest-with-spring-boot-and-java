@@ -406,23 +406,23 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 
         var content = unthreatedContent.replace("\n", "").replace("\r", "");
 
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/7\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/677\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/414\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/846\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/409\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/714\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/911\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/797\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/person/v1/199\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/" +
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/7\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/677\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/414\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/846\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/409\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/714\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/911\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/797\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/person/v1/199\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/" +
                 "person/v1/686\""));
 
-        assertTrue(content.contains("rel: \"first\"  href: \"http://localhost/api/person/v1/?direction=asc&page=0&size=10&sort=firstName,asc\""));
-        assertTrue(content.contains("rel: \"prev\"  href: \"http://localhost/api/person/v1/?direction=asc&page=2&size=10&sort=firstName,asc\""));
-        assertTrue(content.contains("rel: \"self\"  href: \"http://localhost/api/person/v1/?page=3&size=10&direction=asc\""));
-        assertTrue(content.contains("rel: \"next\"  href: \"http://localhost/api/person/v1/?direction=asc&page=4&size=10&sort=firstName,asc\""));
-        assertTrue(content.contains("rel: \"last\"  href: \"http://localhost/api/person/v1/?direction=asc&page=100&size=10&sort=firstName,asc\""));
+        assertTrue(content.contains("rel: \"first\"  href: \"http://localhost:8888/api/person/v1/?direction=asc&page=0&size=10&sort=firstName,asc\""));
+        assertTrue(content.contains("rel: \"prev\"  href: \"http://localhost:8888/api/person/v1/?direction=asc&page=2&size=10&sort=firstName,asc\""));
+        assertTrue(content.contains("rel: \"self\"  href: \"http://localhost:8888/api/person/v1/?page=3&size=10&direction=asc\""));
+        assertTrue(content.contains("rel: \"next\"  href: \"http://localhost:8888/api/person/v1/?direction=asc&page=4&size=10&sort=firstName,asc\""));
+        assertTrue(content.contains("rel: \"last\"  href: \"http://localhost:8888/api/person/v1/?direction=asc&page=100&size=10&sort=firstName,asc\""));
 
         assertTrue(content.contains("page:  size: 10  totalElements: 1007  totalPages: 101  number: 3"));
     }

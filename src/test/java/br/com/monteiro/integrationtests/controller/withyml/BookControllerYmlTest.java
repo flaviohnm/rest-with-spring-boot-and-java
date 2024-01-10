@@ -267,19 +267,19 @@ public class BookControllerYmlTest extends AbstractIntegrationTest {
 
         var content = unthreatedContent.replace("\n", "").replace("\r", "");
 
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/15\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/9\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/4\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/8\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/7\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/14\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/6\""));
-        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost/api/book/v1/1\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/15\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/9\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/4\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/8\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/7\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/14\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/6\""));
+        assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/1\""));
 
-        assertTrue(content.contains("rel: \"first\"  href: \"http://localhost/api/book/v1/?direction=asc&page=0&size=8&sort=author,asc\""));
-        assertTrue(content.contains("rel: \"self\"  href: \"http://localhost/api/book/v1/?page=0&size=8&direction=asc\""));
-        assertTrue(content.contains("rel: \"next\"  href: \"http://localhost/api/book/v1/?direction=asc&page=1&size=8&sort=author,asc\""));
-        assertTrue(content.contains("rel: \"last\"  href: \"http://localhost/api/book/v1/?direction=asc&page=1&size=8&sort=author,asc\""));
+        assertTrue(content.contains("rel: \"first\"  href: \"http://localhost:8888/api/book/v1/?direction=asc&page=0&size=8&sort=author,asc\""));
+        assertTrue(content.contains("rel: \"self\"  href: \"http://localhost:8888/api/book/v1/?page=0&size=8&direction=asc\""));
+        assertTrue(content.contains("rel: \"next\"  href: \"http://localhost:8888/api/book/v1/?direction=asc&page=1&size=8&sort=author,asc\""));
+        assertTrue(content.contains("rel: \"last\"  href: \"http://localhost:8888/api/book/v1/?direction=asc&page=1&size=8&sort=author,asc\""));
 
         assertTrue(content.contains("page:  size: 8  totalElements: 15  totalPages: 2  number: 0"));
 

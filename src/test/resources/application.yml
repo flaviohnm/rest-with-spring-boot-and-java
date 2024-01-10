@@ -3,9 +3,9 @@ cors:
   originPattenrs: http://localhost:3000,http://localhost:8080,http://monteiro.com.br
   ### FILE REPOSITORY ###
 file:
-  upload-dir: /uploadDir
+  upload-dir: /home/runner/work/rest-with-spring-boot-java/uploadDir
 server:
-  port: 80
+  port: 8888
 ### SECURITY CONFIGURATION WITH JWT ###
 security:
   jwt:
