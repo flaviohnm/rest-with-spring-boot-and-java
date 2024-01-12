@@ -1,7 +1,7 @@
 # REST API's RESTFul do 0 à AWS com Spring Boot 3, Java e Docker
 
 [![Continuous Integration with Github Actions](https://github.com/flaviohnm/rest-with-spring-boot-and-java/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/flaviohnm/rest-with-spring-boot-and-java/actions/workflows/continuous-integration.yml)
-
+[![Docker Hub Repo](https://img.shields.io/docker/pulls/flaviohnm/rest-with-spring-boot-and-java.svg)](https://hub.docker.com/repository/docker/flaviohnm/rest-with-spring-boot-and-java)
 ## Descrição do Projeto
 Está api é uma aplicação desenvolvida em Java, utilizando o framework Spring Boot, que visa facilitar a administração e gestão de pessoas e livros.
 
