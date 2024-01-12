@@ -34,10 +34,10 @@ Esse projeto foi desenvolvido com atividade prática do treinamento XXXX do prof
 
 ## Configuração do Ambiente de Desenvolvimento e execução
 
-1. Clone o repositório: git clone https://github.com/PedroUchoa/Spring-School-Api.
+1. Clone o repositório: git clone https://github.com/flaviohnm/rest-with-spring-boot-and-java.
 2. Abra o projeto em sua IDE preferida.
 3. Configure o arquivo application.properties com as informações do banco de dados.
 4. Execute o projeto localmente através da IDA ou usando o maven.
-5. Acesse a aplicação em http://localhost:8080.
-6. Tambem é possivel acessar uma aplicação do Springdoc em http://localhost:8080/swagger-ui.html.
+5. Acesse a aplicação em http://localhost:80.
+6. Tambem é possivel acessar uma aplicação do Springdoc em http://localhost:80/swagger-ui.html.
 
